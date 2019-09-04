@@ -44,17 +44,10 @@ class _MyHomePageState extends State<MyHomePage> {
         onRender: (_pages) {
           setState(() {
             pages = _pages;
+            debugPrint("pages $pages");
           });
         },
-        // onError: (error) {
-        //   print(error.toString());
-        // },
-        // onPageError: (page, error) {
-        //   print('$page: ${error.toString()}');
-        // },
-        onViewCreated: (PDFViewController pdfViewController) {
-          // _controller.complete(pdfViewController);
-        },
+        onViewCreated: (PDFViewController pdfViewController) {},
         onPageChanged: (int page, int total) {
           print('page change: $page/$total');
         },
@@ -103,14 +96,12 @@ class _MyHomePageState extends State<MyHomePage> {
             },
             child: Text("Open PDF"),
           ),
-          pdfPath != ""
-              ? Container(
-                  child: view(pdfPath),
-                  height: 200,
-                )
-              : Container(
-                  height: 200,
-                )
+          Expanded(
+              child: pdfPath != ""
+                  ? view(pdfPath)
+                  : Container(
+                      height: 200,
+                    ))
           // SizedBox(
           //   width: 350,
           //   height: 350,
