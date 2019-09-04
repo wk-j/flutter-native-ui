@@ -101,12 +101,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   ? view(pdfPath)
                   : Container(
                       height: 200,
-                    ))
-          // SizedBox(
-          //   width: 350,
-          //   height: 350,
-          //   child: UiKitView(viewType: "FluffView"),
-          // ),
+                    )),
+          SizedBox(
+            width: 350,
+            height: 350,
+            child: UiKitView(viewType: "FluffView"),
+          ),
         ],
       ),
     );
