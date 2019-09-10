@@ -96,16 +96,14 @@ class _MyHomePageState extends State<MyHomePage> {
             },
             child: Text("Open PDF"),
           ),
+          // Expanded(
+          //     child: pdfPath != ""
+          //         ? view(pdfPath)
+          //         : Container(
+          //             height: 200,
+          //           )),
           Expanded(
-              child: pdfPath != ""
-                  ? view(pdfPath)
-                  : Container(
-                      height: 200,
-                    )),
-          SizedBox(
-            width: 350,
-            height: 350,
-            child: UiKitView(viewType: "FluffView"),
+            child: UiKitView(viewType: "PdfView"),
           ),
         ],
       ),

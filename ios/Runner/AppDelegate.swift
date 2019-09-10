@@ -1,5 +1,6 @@
 import UIKit
 import Flutter
+import WebKit
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
@@ -8,26 +9,30 @@ import Flutter
     didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?
   ) -> Bool {
     let nativeViewFactory = FluffViewFactory()
-    registrar(forPlugin: "Runner").register(nativeViewFactory, withId: "FluffView")
+    let pdfViewFactory = QPdfViewFactory()
+    
+    let plugin = registrar(forPlugin: "Runner")
+    
+    plugin.register(nativeViewFactory, withId: "FluffView")
+    plugin.register(pdfViewFactory, withId: "PdfView")
     
     GeneratedPluginRegistrant.register(with: self)
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 }
 
-
-public class FluffViewFactory: NSObject, FlutterPlatformViewFactory {
+public class QPdfViewFactory: NSObject, FlutterPlatformViewFactory {
     public func create(
         withFrame frame: CGRect,
         viewIdentifier viewId: Int64,
         arguments args: Any?
         ) -> FlutterPlatformView {
         
-        return FluffView(frame, viewId: viewId, args: args)
+        return QPdfView(frame, viewId: viewId, args: args)
     }
 }
 
-public class FluffView: NSObject, FlutterPlatformView {
+public class QPdfView: NSObject, FlutterPlatformView {
     let frame: CGRect
     let viewId: Int64
     
@@ -36,6 +41,16 @@ public class FluffView: NSObject, FlutterPlatformView {
         self.viewId = viewId
     }
     public func view() -> UIView {
-        return UISlider(frame: frame)
+        let url = Bundle.main.url(forResource: "tesla", withExtension: "pdf")
+        guard let x = url else {
+            return UISlider(frame: frame)
+        }
+        let webView = WKWebView(frame:  frame)
+        let urlRequest = URLRequest(url: x)
+        webView.load(urlRequest)
+        return webView;
     }
 }
+
+
+
